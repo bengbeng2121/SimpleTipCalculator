@@ -18,17 +18,23 @@ export default class TipCal extends Component {
         return (
             <View>
                 <View>
-                    <Text>Tip Calculator</Text>
+                    <Text style={styles.title}>Tip Calculator</Text>
                 </View>
 
-                <View>
-                    <Text>Bill amount</Text>
+                <View style={{flexDirection: 'row', paddingBottom: 10}}>
+                    <View style={{justifyContent: 'center', alignItems: 'flex-start'}}>
+                        <Text style={styles.label}>Bill amount: </Text>
+                    </View>
                     <TextInput
-                        onChangeText={(billAmount) => this.handleBillAmountChange(billAmount)}/>
+                        onChangeText={(billAmount) => this.handleBillAmountChange(billAmount)}
+                        keyboardType='numeric'
+                        maxLength={10}
+                        placeholder="0"
+                        style={{height: 40, borderColor: 'gray', borderWidth: 1, flex: 1}}/>
                 </View>
 
-                <View>
-                    <Text>Tip amount: 0</Text>
+                <View style={{paddingBottom: 10}}>
+                    <Text style={styles.label}>Tip amount: {this.state.tipAmount}</Text>
                 </View>
 
                 <View>
@@ -39,13 +45,23 @@ export default class TipCal extends Component {
                 </View>
 
                 <View>
-                    <Text>Bill amount: {this.state.billAmount}</Text>
-                    <Text>Tip amount: {this.state.tipAmount}</Text>
-                    <Text>Percent: {this.tipValues()[this.state.segmentSelectedIndex]}</Text>
+                    <View style={styles.result}>
+                        <Text>Bill amount: </Text>
+                        <Text>{this.state.billAmount}</Text>
+                    </View>
+                    <View style={styles.result}>
+                        <Text>Tip amount: </Text>
+                        <Text>{this.state.tipAmount}</Text>
+                    </View>
+                    <View style={styles.result}>
+                        <Text>Percent: </Text>
+                        <Text>{this.tipValues()[this.state.segmentSelectedIndex]}</Text>
+                    </View>
                 </View>
 
-                <View>
-                    <Text>Result: {this.state.result}</Text>
+                <View style={[styles.result, {paddingTop: 10}]}>
+                    <Text style={{fontWeight: 'bold'}}>Result: </Text>
+                    <Text style={{fontWeight: 'bold'}}>{this.state.result}</Text>
                 </View>
             </View>
         );
@@ -60,7 +76,7 @@ export default class TipCal extends Component {
     }
 
     handleBillAmountChange(billAmount) {
-        this.setState({billAmount: billAmount}, this.calculateTip);
+        this.setState({billAmount: billAmount || 0}, this.calculateTip);
     }
 
     calculateTip() {
@@ -72,5 +88,22 @@ export default class TipCal extends Component {
         });
     }
 }
+
+const styles = StyleSheet.create({
+    title: {
+        color: 'cornflowerblue',
+        fontWeight: 'bold',
+        fontSize: 20,
+        textAlign: 'center',
+        paddingBottom: 10
+    },
+    label: {
+        fontSize: 16
+    },
+    result: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    }
+});
 
 module.exports = TipCal;

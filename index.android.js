@@ -16,7 +16,9 @@ import Calculator from './app/calculator';
 export default class SimpleTipCalculator extends Component {
     render() {
         return (
-            <Calculator />
+            <View style={{padding: 10}}>
+                <Calculator />
+            </View>
         );
     }
 }
