@@ -5,20 +5,28 @@
  */
 
 import React, {Component} from 'react';
-import {
-    AppRegistry,
-    StyleSheet,
-    Text,
-    View
-} from 'react-native';
+import {AppRegistry, Navigator} from 'react-native';
 import Calculator from './app/calculator';
+import Setting from './app/setting';
+import PowerRanger from './app/powerranger';
 
 export default class SimpleTipCalculator extends Component {
     render() {
         return (
-            <View style={{padding: 10}}>
-                <Calculator />
-            </View>
+            /***********************************
+            <Navigator
+                initialRoute={{id: 'CalculatorPage', title: 'Tip Calculator Page'}}
+                renderScene={(route, navigator)=> {
+                    switch (route.id) {
+                        case 'CalculatorPage':
+                            return <Calculator navigator={navigator}/>;
+                        case 'SettingPage':
+                            return <Setting navigator={navigator}/>;
+                    }
+                }}
+            />
+            ***********************************/
+            <PowerRanger/>
         );
     }
 }
