@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {StyleSheet, Text, View, TextInput, Button} from "react-native";
-import SegmentedControlTab from 'react-native-segmented-control-tab';
+import SegmentedControlTab from "react-native-segmented-control-tab";
 
 export default class TipCal extends Component {
 
@@ -16,7 +16,7 @@ export default class TipCal extends Component {
 
     render() {
         return (
-            <View style={{padding: 10}}>
+            <View style={{marginTop:50,padding:10}}>
                 <View>
                     <Text style={styles.title}>Tip Calculator</Text>
                 </View>
@@ -92,10 +92,9 @@ export default class TipCal extends Component {
 const styles = StyleSheet.create({
     title: {
         color: 'cornflowerblue',
-        fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 25,
         textAlign: 'center',
-        paddingBottom: 10
+        marginBottom: 10
     },
     label: {
         fontSize: 16
