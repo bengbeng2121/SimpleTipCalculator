@@ -30,6 +30,7 @@ export default class TipCal extends Component {
                         keyboardType='numeric'
                         maxLength={10}
                         placeholder="0"
+                        autoFocus={true}
                         style={{height: 40, borderColor: 'gray', borderWidth: 1, flex: 1}}/>
                 </View>
 
