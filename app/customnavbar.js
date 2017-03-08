@@ -1,9 +1,8 @@
 /**
  * Created by binhlt on 07/03/2017.
  */
-
-import React from 'react';
-import {TouchableOpacity, Text, Navigator, StyleSheet} from 'react-native';
+import React from "react";
+import {TouchableOpacity, Text, Navigator, StyleSheet} from "react-native";
 
 var NavigationBarRouteMapper = {
     LeftButton: (route, navigator, index, navState) => {

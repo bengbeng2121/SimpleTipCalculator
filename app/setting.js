@@ -1,8 +1,8 @@
 /**
  * Created by binhlt on 06/03/2017.
  */
-import React, {Component} from 'react';
-import {View, Text, Picker, AsyncStorage} from 'react-native';
+import React, {Component} from "react";
+import {View, Text, Picker, AsyncStorage} from "react-native";
 
 export default class Setting extends Component {
 
@@ -37,7 +37,6 @@ export default class Setting extends Component {
     setSelectSceneTransition(scene) {
         try {
             this.setSceneTransition(scene);
-            this.setState({scene: scene});
         } catch (error) {
             console.log("Oop!! Something went wrong !!!" + error);
         }
@@ -45,9 +44,8 @@ export default class Setting extends Component {
 
     async setSceneTransition(scene) {
         try {
-            console.log("scene: " + scene);
             await AsyncStorage.setItem('SCENE_SELECTED', scene);
-            this.setState({scene: scene});
+            this.setState({sceneTransition: scene});
         } catch (error) {
             console.log("Hmm, something went wrong when set data..." + error);
         }
