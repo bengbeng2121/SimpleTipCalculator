@@ -2,7 +2,7 @@
  * Created by binhlt on 07/03/2017.
  */
 import React from "react";
-import {TouchableOpacity, Text, Navigator, StyleSheet} from "react-native";
+import {TouchableOpacity, Text, Navigator, StyleSheet, Keyboard} from "react-native";
 
 var NavigationBarRouteMapper = {
     LeftButton: (route, navigator, index, navState) => {
@@ -11,13 +11,20 @@ var NavigationBarRouteMapper = {
     RightButton: (route, navigator, index, navState) => {
         if (route.id != 'CalculatorPage') {
             return (
-                <TouchableOpacity style={stylesCSS.tabBarHeader} onPress={() => navigator.pop()}>
+                <TouchableOpacity
+                    style={stylesCSS.tabBarHeader}
+                    onPress={() => navigator.pop()}>
                     <Text>Save</Text>
                 </TouchableOpacity>
             );
         } else {
             return (
-                <TouchableOpacity style={stylesCSS.tabBarHeader} onPress={() => navigator.push({id: 'SettingPage'})}>
+                <TouchableOpacity
+                    style={stylesCSS.tabBarHeader}
+                    onPress={() => {
+                        navigator.push({id: 'SettingPage'});
+                        Keyboard.dismiss()}
+                    }>
                     <Text style={stylesCSS.headerFontSize}>Setting</Text>
                 </TouchableOpacity>
             );

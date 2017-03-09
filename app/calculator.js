@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {StyleSheet, Text, View, TextInput, Button} from "react-native";
+import {StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard} from "react-native";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 
 export default class TipCal extends Component {
@@ -16,55 +16,57 @@ export default class TipCal extends Component {
 
     render() {
         return (
-            <View style={{marginTop:50,padding:10}}>
-                <View>
-                    <Text style={styles.title}>Tip Calculator</Text>
-                </View>
-
-                <View style={{flexDirection: 'row', paddingBottom: 10}}>
-                    <View style={{justifyContent: 'center', alignItems: 'flex-start'}}>
-                        <Text style={styles.label}>Bill amount: </Text>
+            <TouchableWithoutFeedback onPress={()=>this.dismissKeyboard()}>
+                <View style={{marginTop:50,padding:10}}>
+                    <View>
+                        <Text style={styles.title}>Tip Calculator</Text>
                     </View>
-                    <TextInput
-                        onChangeText={(billAmount) => this.handleBillAmountChange(billAmount)}
-                        keyboardType='numeric'
-                        maxLength={10}
-                        placeholder="0"
-                        autoFocus={true}
-                        style={{height: 40, borderColor: 'gray', borderWidth: 1, flex: 1}}/>
-                </View>
 
-                <View style={{paddingBottom: 10}}>
-                    <Text style={styles.label}>Tip amount: {this.state.tipAmount}</Text>
-                </View>
-
-                <View>
-                    <SegmentedControlTab
-                        values={this.tipValues()}
-                        onTabPress={index => this.handleSegmentChange(index)}
-                    />
-                </View>
-
-                <View>
-                    <View style={styles.result}>
-                        <Text>Bill amount: </Text>
-                        <Text>{this.state.billAmount}</Text>
+                    <View style={{flexDirection: 'row', paddingBottom: 10}}>
+                        <View style={{justifyContent: 'center', alignItems: 'flex-start'}}>
+                            <Text style={styles.label}>Bill amount: </Text>
+                        </View>
+                        <TextInput
+                            onChangeText={(billAmount) => this.handleBillAmountChange(billAmount)}
+                            keyboardType='numeric'
+                            maxLength={10}
+                            placeholder="0"
+                            autoFocus={true}
+                            style={{height: 40, borderColor: 'gray', borderWidth: 1, flex: 1}}/>
                     </View>
-                    <View style={styles.result}>
-                        <Text>Tip amount: </Text>
-                        <Text>{this.state.tipAmount}</Text>
-                    </View>
-                    <View style={styles.result}>
-                        <Text>Percent: </Text>
-                        <Text>{this.tipValues()[this.state.segmentSelectedIndex]}</Text>
-                    </View>
-                </View>
 
-                <View style={[styles.result, {paddingTop: 10}]}>
-                    <Text style={{fontWeight: 'bold'}}>Result: </Text>
-                    <Text style={{fontWeight: 'bold'}}>{this.state.result}</Text>
+                    <View style={{paddingBottom: 10}}>
+                        <Text style={styles.label}>Tip amount: {this.state.tipAmount}</Text>
+                    </View>
+
+                    <View>
+                        <SegmentedControlTab
+                            values={this.tipValues()}
+                            onTabPress={index => this.handleSegmentChange(index)}
+                        />
+                    </View>
+
+                    <View>
+                        <View style={styles.result}>
+                            <Text>Bill amount: </Text>
+                            <Text>{this.state.billAmount}</Text>
+                        </View>
+                        <View style={styles.result}>
+                            <Text>Tip amount: </Text>
+                            <Text>{this.state.tipAmount}</Text>
+                        </View>
+                        <View style={styles.result}>
+                            <Text>Percent: </Text>
+                            <Text>{this.tipValues()[this.state.segmentSelectedIndex]}</Text>
+                        </View>
+                    </View>
+
+                    <View style={[styles.result, {paddingTop: 10}]}>
+                        <Text style={{fontWeight: 'bold'}}>Result: </Text>
+                        <Text style={{fontWeight: 'bold'}}>{this.state.result}</Text>
+                    </View>
                 </View>
-            </View>
+            </TouchableWithoutFeedback>
         );
     }
 
@@ -73,6 +75,7 @@ export default class TipCal extends Component {
     }
 
     handleSegmentChange(index) {
+        this.dismissKeyboard();
         this.setState({segmentSelectedIndex: index}, this.calculateTip);
     }
 
@@ -87,6 +90,10 @@ export default class TipCal extends Component {
             tipAmount: billAmount * percent,
             result: billAmount + billAmount * percent
         });
+    }
+
+    dismissKeyboard() {
+        Keyboard.dismiss();
     }
 }
 

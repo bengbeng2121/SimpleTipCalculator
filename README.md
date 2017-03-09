@@ -50,7 +50,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-It's quiet hard to work with AsyncStorage, I have to wait the returned result.
+- I want to hide the right triangle of React Native picker.
 
 ## License
 
