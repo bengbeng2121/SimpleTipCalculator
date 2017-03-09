@@ -3,22 +3,32 @@
  */
 
 import React, {Component} from "react";
-import {View, Text, Picker, AsyncStorage, StyleSheet} from "react-native";
+import {
+    View,
+    Text,
+    Picker,
+    AsyncStorage,
+    StyleSheet,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    Modal
+} from "react-native";
 
 export default class Setting extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            sceneTransition: "FloatFromRight"
+            sceneTransition: "FloatFromRight",
+            modalVisible: false
         };
     }
 
     render() {
         return (
             <View>
-                <View style={styles.container}>
-                    <Text style={styles.title}>Scene Transitions</Text>
+                <View style={styles.itemContainer}>
+                    <Text style={styles.itemTitle}>Scene Transitions</Text>
                     <Picker
                         style={styles.picker}
                         selectedValue={this.state.sceneTransition}
@@ -32,9 +42,22 @@ export default class Setting extends Component {
                         <Picker.Item label="HorizontalSwipeJumpFromRight" value="HorizontalSwipeJumpFromRight"/>
                     </Picker>
                 </View>
-                <View style={styles.container}>
-                    <Text style={styles.title}>Tip percentages</Text>
-                </View>
+                <TouchableOpacity onPress={() => {this.setState({modalVisible: true})}}>
+                    <View style={styles.itemContainer}>
+                        <Text style={styles.itemTitle}>Tip percentages</Text>
+                    </View>
+                </TouchableOpacity>
+                <Modal
+                    animationType={"fade"}
+                    transparent={true}
+                    visible={this.state.modalVisible}
+                    onRequestClose={() => {this.setState({modalVisible: false})}}>
+                    <View style={styles.modalContainer}>
+                        <View style={styles.modalInnerContainer}>
+                            <Text>day la popup</Text>
+                        </View>
+                    </View>
+                </Modal>
             </View>
         );
     }
@@ -71,11 +94,11 @@ export default class Setting extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    itemContainer: {
         borderBottomWidth: 1,
         borderBottomColor: "lightgrey",
     },
-    title: {
+    itemTitle: {
         color: "black",
         fontSize: 16,
         padding: 20,
@@ -86,14 +109,17 @@ const styles = StyleSheet.create({
         marginTop: -30,
         color: "lightgrey",
     },
-    content: {
-        color: "lightgrey",
-        fontSize: 12,
-        paddingTop: 5,
-        paddingLeft: 30,
-        paddingBottom: 20,
-        width: 100,
-        height: 40,
+    modalContainer: {
+        flex: 1,
+        justifyContent: "center",
+        padding: 20,
+        backgroundColor: "rgba(0,0,0,0.5)",
+    },
+    modalInnerContainer: {
+        borderRadius: 10,
+        alignItems: "center",
+        padding: 20,
+        backgroundColor: '#fff',
     }
 });
 
