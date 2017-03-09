@@ -11,7 +11,8 @@ import {
     StyleSheet,
     TouchableOpacity,
     TouchableWithoutFeedback,
-    Modal
+    Modal,
+    Slider
 } from "react-native";
 
 export default class Setting extends Component {
@@ -20,7 +21,10 @@ export default class Setting extends Component {
         super(props);
         this.state = {
             sceneTransition: "FloatFromRight",
-            modalVisible: false
+            modalVisible: false,
+            percent1: 10,
+            percent2: 15,
+            percent3: 50
         };
     }
 
@@ -52,14 +56,67 @@ export default class Setting extends Component {
                     transparent={true}
                     visible={this.state.modalVisible}
                     onRequestClose={() => {this.setState({modalVisible: false})}}>
-                    <View style={styles.modalContainer}>
-                        <View style={styles.modalInnerContainer}>
-                            <Text>day la popup</Text>
-                        </View>
-                    </View>
+                    <TouchableOpacity
+                        style={styles.modalContainer}
+                        onPress={() => {this.setState({modalVisible: false})}}>
+                        <TouchableWithoutFeedback>
+                            <View style={styles.modalInnerContainer}>
+                                <Text>Percentage 1: {this.state.percent1}%</Text>
+                                <Slider
+                                    style={styles.slider}
+                                    value={this.state.percent1}
+                                    minimumValue={0}
+                                    maximumValue={100}
+                                    step={5}
+                                    onValueChange={(value) => this.onPercentagesChange(1, value)}
+                                    onSlidingComplete={(value) => this.setPercentages(1, value)}/>
+                                <Text>Percentage 2: {this.state.percent2}%</Text>
+                                <Slider
+                                    style={styles.slider}
+                                    value={this.state.percent2}
+                                    minimumValue={0}
+                                    maximumValue={100}
+                                    step={5}
+                                    onValueChange={(value) => this.onPercentagesChange(2, value)}
+                                    onSlidingComplete={(value) => this.setPercentages(2, value)}/>
+                                <Text>Percentage 3: {this.state.percent3}%</Text>
+                                <Slider
+                                    style={styles.lastSlider}
+                                    value={this.state.percent3}
+                                    minimumValue={0}
+                                    maximumValue={100}
+                                    step={5}
+                                    onValueChange={(value) => this.onPercentagesChange(3, value)}
+                                    onSlidingComplete={(value) => this.setPercentages(3, value)}/>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </TouchableOpacity>
                 </Modal>
             </View>
         );
+    }
+
+    onPercentagesChange(index, value) {
+        this.setState({["percent" + index]: value});
+    }
+
+    async setPercentages(index, value) {
+        try {
+            await AsyncStorage.setItem('PERCENT_' + index, String(value));
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getPercentages() {
+        try {
+            for (let i = 1; i <= 3; i++) {
+                let value = await AsyncStorage.getItem("PERCENT_" + i);
+                this.setState({["percent" + i]: parseFloat(value)});
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     setSelectSceneTransition(scene) {
@@ -90,6 +147,7 @@ export default class Setting extends Component {
 
     componentDidMount() {
         this.getSceneTransition();
+        this.getPercentages();
     }
 }
 
@@ -117,9 +175,15 @@ const styles = StyleSheet.create({
     },
     modalInnerContainer: {
         borderRadius: 10,
-        alignItems: "center",
         padding: 20,
         backgroundColor: '#fff',
+    },
+    slider: {
+        marginTop: 10,
+        marginBottom: 20,
+    },
+    lastSlider: {
+        marginTop: 10,
     }
 });
 

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard} from "react-native";
+import {StyleSheet, Text, View, TextInput, TouchableWithoutFeedback, Keyboard, AsyncStorage} from "react-native";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 
 export default class TipCal extends Component {
@@ -10,11 +10,18 @@ export default class TipCal extends Component {
             segmentSelectedIndex: 0,
             billAmount: 0,
             tipAmount: 0,
-            result: 0
+            result: 0,
+            percent1: "10%",
+            percent2: "15%",
+            percent3: "50%"
         };
     }
 
     render() {
+        if (this.props.navigator.refresh) {
+            this.props.navigator.refresh = false;
+            this.getPercentages();
+        }
         return (
             <TouchableWithoutFeedback onPress={()=>this.dismissKeyboard()}>
                 <View style={{marginTop:50,padding:10}}>
@@ -71,7 +78,8 @@ export default class TipCal extends Component {
     }
 
     tipValues() {
-        return ["10%", "15%", "50%"];
+        //this.getPercentages();
+        return [this.state.percent1, this.state.percent2, this.state.percent3];
     }
 
     handleSegmentChange(index) {
@@ -94,6 +102,23 @@ export default class TipCal extends Component {
 
     dismissKeyboard() {
         Keyboard.dismiss();
+    }
+
+    async getPercentages() {
+        console.log("Percentages");
+        try {
+            for (let i = 1; i <= 3; i++) {
+                let value = await AsyncStorage.getItem("PERCENT_" + i);
+                console.log(i + ": " + value);
+                this.setState({["percent" + i]: value + "%"});
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    componentDidMount() {
+        this.getPercentages();
     }
 }
 

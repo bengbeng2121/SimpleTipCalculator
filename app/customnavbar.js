@@ -13,7 +13,10 @@ var NavigationBarRouteMapper = {
             return (
                 <TouchableOpacity
                     style={stylesCSS.tabBarHeader}
-                    onPress={() => navigator.pop()}>
+                    onPress={() => {
+                        navigator.refresh = true;
+                        navigator.pop();}
+                    }>
                     <Text>Save</Text>
                 </TouchableOpacity>
             );
@@ -22,8 +25,8 @@ var NavigationBarRouteMapper = {
                 <TouchableOpacity
                     style={stylesCSS.tabBarHeader}
                     onPress={() => {
-                        navigator.push({id: 'SettingPage'});
-                        Keyboard.dismiss()}
+                        Keyboard.dismiss();
+                        navigator.push({id: 'SettingPage'});}
                     }>
                     <Text style={stylesCSS.headerFontSize}>Setting</Text>
                 </TouchableOpacity>
@@ -36,12 +39,8 @@ var NavigationBarRouteMapper = {
 };
 
 const stylesCSS = StyleSheet.create({
-    tabBarHeader: {
-
-    },
-    headerFontSize: {
-
-    }
+    tabBarHeader: {},
+    headerFontSize: {}
 });
 
 module.exports = (

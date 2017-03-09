@@ -32,7 +32,7 @@ The following **required** functionality is complete:
 
 The following **optional** features are implemented:
 * [x] UI animations
-* [ ] Settings page to change the default tip percentage.
+* [x] Settings page to change the default tip percentage.
 * [ ] Using locale-specific currency and currency thousands separators.
 * [x] Making sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
 
@@ -50,7 +50,8 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-- I want to hide the right triangle of React Native picker.
+- I don't know how to hide the right triangle of React Native picker.
+- With AsyncStore, sometimes the "state" will be updated late and the "render()" will use old state. 
 
 ## License
 
