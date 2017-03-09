@@ -1,8 +1,9 @@
 /**
  * Created by binhlt on 06/03/2017.
  */
+
 import React, {Component} from "react";
-import {View, Text, Picker, AsyncStorage} from "react-native";
+import {View, Text, Picker, AsyncStorage, StyleSheet} from "react-native";
 
 export default class Setting extends Component {
 
@@ -15,10 +16,11 @@ export default class Setting extends Component {
 
     render() {
         return (
-            <View style={{marginTop:50,padding:10}}>
-                <View>
-                    <Text style={{fontSize:25}}>Scene Transitions</Text>
+            <View>
+                <View style={styles.container}>
+                    <Text style={styles.title}>Scene Transitions</Text>
                     <Picker
+                        style={styles.picker}
                         selectedValue={this.state.sceneTransition}
                         onValueChange={(scene) => this.setSelectSceneTransition(scene)}>
                         <Picker.Item label="FloatFromRight" value="FloatFromRight"/>
@@ -29,6 +31,9 @@ export default class Setting extends Component {
                         <Picker.Item label="HorizontalSwipeJump" value="HorizontalSwipeJump"/>
                         <Picker.Item label="HorizontalSwipeJumpFromRight" value="HorizontalSwipeJumpFromRight"/>
                     </Picker>
+                </View>
+                <View style={styles.container}>
+                    <Text style={styles.title}>Tip percentages</Text>
                 </View>
             </View>
         );
@@ -64,5 +69,32 @@ export default class Setting extends Component {
         this.getSceneTransition();
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        borderBottomWidth: 1,
+        borderBottomColor: "lightgrey",
+    },
+    title: {
+        color: "black",
+        fontSize: 16,
+        padding: 20,
+        paddingLeft: 30,
+    },
+    picker: {
+        marginLeft: 30,
+        marginTop: -30,
+        color: "lightgrey",
+    },
+    content: {
+        color: "lightgrey",
+        fontSize: 12,
+        paddingTop: 5,
+        paddingLeft: 30,
+        paddingBottom: 20,
+        width: 100,
+        height: 40,
+    }
+});
 
 module.exports = Setting;
