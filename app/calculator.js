@@ -110,8 +110,21 @@ export default class TipCal extends Component {
             for (let i = 1; i <= 3; i++) {
                 let value = await AsyncStorage.getItem("PERCENT_" + i);
                 console.log(i + ": " + value);
-                this.setState({["percent" + i]: value + "%"});
+                if (value) {
+                    this.setState({["percent" + i]: value + "%"});
+                } else {
+                    value = parseFloat(this.state["percent" + i]);
+                    this.setPercentages(i, value);
+                }
             }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async setPercentages(index, value) {
+        try {
+            await AsyncStorage.setItem('PERCENT_' + index, String(value));
         } catch (error) {
             console.log(error);
         }
